@@ -387,15 +387,16 @@
                 <li><a id="nav-home" class="active">Página Principal</a></li>
                 <li><a id="nav-dashboard">Dashboard</a></li>
                 <li><a id="nav-report">Relatório</a></li>
+                <li><a id="nav-apontamento">Apontamentos</a></li>
             </ul>
         </nav>
     </header>
 
     <main id="landing-page">
         <section class="hero">
-            <h1>Gestão de Ações - Ata de Reunião</h1>
+            <h1> Gestão de Ações </h1>
             <p>
-                Este portal centraliza e processa os dados de atas de reunião, convertendo-os em um dashboard interativo. A ferramenta foi concebida para monitorizar o estado das pendências, analisar o desempenho através de indicadores chave (KPIs) como o tempo médio de atendimento, e facilitar a tomada de decisão baseada em dados.
+                Este portal centraliza e processa os dados de atas de reunião, convertendo-os em um dashboard interativo. A ferramenta foi concebida para monitorizar o estado das pendências, analisar o desempenho através de indicadores chave (KPIs) como o tempo médio de atendimento, e facilitar a tomada de decisão baseada em dados. Foram adicionadas as guias "Relatório" e "Apontamentos" onde é possível visualizar o relatório apresentado na última reunião e o dados dos apontamentos de maneira interativa.
             </p>
             <a id="cta-button" class="cta-button">Aceder ao Dashboard</a>
         </section>
@@ -491,6 +492,24 @@
             </iframe>
         </div>
     </div>
+
+    <div id="apontamento-page" class="container" style="display: none;">
+        <h1>Apontamentos - SnagR</h1>
+        <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 15px;">
+             <button id="btn-fullscreen-snagr" style="padding: 8px 15px; background-color: var(--cor-primaria); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Maximizar</button>
+        </div>
+        
+        <div id="snagr-container" style="height: 90vh; border: 1px solid #ccc; background: #fff;">
+            <iframe 
+                src="https://fluz1.github.io/SnagR37/" 
+                width="100%" 
+                height="100%"
+                style="border: none;"
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+
     <div id="detailsModal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
@@ -1194,18 +1213,21 @@
         // --- ATUALIZAÇÃO DA NAVEGAÇÃO ---
         const navHome = document.getElementById('nav-home');
         const navDashboard = document.getElementById('nav-dashboard');
-        const navReport = document.getElementById('nav-report'); // Nova guia
+        const navReport = document.getElementById('nav-report');
+        const navApontamento = document.getElementById('nav-apontamento'); // NOVO
         
         const landingPage = document.getElementById('landing-page');
         const dashboardPage = document.getElementById('dashboard-page');
-        const reportPage = document.getElementById('report-page'); // Nova seção
+        const reportPage = document.getElementById('report-page');
+        const apontamentoPage = document.getElementById('apontamento-page'); // NOVO
         
         const ctaButton = document.getElementById('cta-button');
 
         function showPage(pageId) {
             landingPage.style.display = 'none';
             dashboardPage.style.display = 'none';
-            reportPage.style.display = 'none'; // Esconde a nova seção
+            reportPage.style.display = 'none';
+            apontamentoPage.style.display = 'none'; // NOVO
 
             // Mostra a página correta
             document.getElementById(pageId).style.display = pageId === 'landing-page' ? 'flex' : 'block';
@@ -1213,13 +1235,15 @@
             // Atualiza a classe 'active'
             navHome.classList.toggle('active', pageId === 'landing-page');
             navDashboard.classList.toggle('active', pageId === 'dashboard-page');
-            navReport.classList.toggle('active', pageId === 'report-page'); // Atualiza a nova guia
+            navReport.classList.toggle('active', pageId === 'report-page');
+            navApontamento.classList.toggle('active', pageId === 'apontamento-page'); // NOVO
         }
 
         // Adiciona listeners para todas as guias
         navHome.addEventListener('click', () => showPage('landing-page'));
         navDashboard.addEventListener('click', () => showPage('dashboard-page'));
-        navReport.addEventListener('click', () => showPage('report-page')); // Listener da nova guia
+        navReport.addEventListener('click', () => showPage('report-page'));
+        navApontamento.addEventListener('click', () => showPage('apontamento-page')); // NOVO
         
         ctaButton.addEventListener('click', () => showPage('dashboard-page'));
         // --- FIM DA ATUALIZAÇÃO DA NAVEGAÇÃO ---
@@ -1657,6 +1681,25 @@
                     pdfContainer.webkitRequestFullscreen();
                 } else if (pdfContainer.msRequestFullscreen) { /* IE/Edge */
                     pdfContainer.msRequestFullscreen();
+                }
+            });
+        }
+        // --- FIM DO NOVO SCRIPT ---
+
+        // --- NOVO SCRIPT PARA TELA CHEIA DO SNAGR ---
+        const snagrFullscreenBtn = document.getElementById('btn-fullscreen-snagr');
+        const snagrContainer = document.getElementById('snagr-container');
+
+        if (snagrFullscreenBtn && snagrContainer) {
+            snagrFullscreenBtn.addEventListener('click', () => {
+                if (snagrContainer.requestFullscreen) {
+                    snagrContainer.requestFullscreen();
+                } else if (snagrContainer.mozRequestFullScreen) { /* Firefox */
+                    snagrContainer.mozRequestFullScreen();
+                } else if (snagrContainer.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+                    snagrContainer.webkitRequestFullscreen();
+                } else if (snagrContainer.msRequestFullscreen) { /* IE/Edge */
+                    snagrContainer.msRequestFullscreen();
                 }
             });
         }
